@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DXF Analyzer</title>
+</head>
+<body onload="updateThicknessOptions()">
+    <div class="bg"></div>
+    <div class="content">
+        <h1>
+            DXF Analyzer
+        </h1>
+        <div class="containter" id="cont" style="">
+            <label for="fileInput">Wybierz plik DXF:</label>
+            <input type="file" id="fileInput" accept=".dxf">
+            <p>
+                <label for="material">Materiał:
+                    <select id="material" onchange="updateThicknessOptions()">
+                        <option value="stal ocynkowana">Stal ocynkowana</option>
+                        <option value="stal nierdzewna">Stal nierdzewna</option>
+                        <option value="stal czarna">Stal czarna</option>
+                    </select>
+                </label>
+            </p>
+            <p>
+                <label for="thickness">Grubość:</label>
+                <select id="thickness"></select>
+            </p>
+            <p>
+                <input type="checkbox" id="requireMaterial">
+                <label for="requireMaterial">Potrzebuje materiału</label>
+            </p>
+            <button onclick="analyzeDXF()">Analizuj plik DXF</button>
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

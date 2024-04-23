@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import os
-from analiza import analyze_dxf
+from wycena_dxf import analyze_dxf
 
 app = Flask(__name__)
 CORS(app)

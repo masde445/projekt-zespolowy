@@ -35,6 +35,7 @@ def analyze():
     return jsonify({
         'total_perimeter': round(total_perimeter, 1),
         'total_area': round(total_area, 1)
+        'total_cost': total_cost
     })
 
 if __name__ == '__main__':

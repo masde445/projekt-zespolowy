@@ -5,24 +5,24 @@ from math import sqrt, pi
 
 def calculate_perimeter(entity):
     """
-    Funkcja oblicza obw�d dla r�nych typ�w geometrii.
+    Funkcja oblicza obwód dla ró¿nych typów geometrii.
     """
     if entity.dxftype() == 'LINE':
         return entity.length
     elif entity.dxftype() == 'CIRCLE':
         return 2 * pi * entity.dxf.radius
     elif entity.dxftype() == 'ARC':
-        return 2 * pi * entity.dxf.radius  # Przyk�adowe obliczenie dla �uk�w pe�nych
+        return 2 * pi * entity.dxf.radius  # Przyk³adowe obliczenie dla ³uków pe³nych
     elif entity.dxftype() == 'LWPOLYLINE':
         return calculate_lwpolyline_length(entity)
     elif entity.dxftype() == 'SPLINE':
-        return "Nieobs�ugiwane"
+        return "Nieobs³ugiwane"
     else:
-        return "Nieznany kszta�t"
+        return "Nieznany kszta³t"
 
 def calculate_area(entity):
     """
-    Funkcja oblicza pole dla r�nych typ�w geometrii.
+    Funkcja oblicza pole dla ró¿nych typów geometrii.
     """
     if entity.dxftype() == 'CIRCLE':
         return pi * entity.dxf.radius**2
@@ -36,15 +36,15 @@ def calculate_area(entity):
                 area += (x2 - x1) * (y1 + y2) / 2.0
             return abs(area)
         else:
-            return "B��d: brakuje punkt�w"
+            return "B³¹d: brakuje punktów"
     elif entity.dxftype() == 'SPLINE':
-        return "Nieobs�ugiwane"
+        return "Nieobs³ugiwane"
     else:
-        return "Nieznany kszta�t"
+        return "Nieznany kszta³t"
 
 def calculate_lwpolyline_length(lwpolyline):
     """
-    Funkcja oblicza d�ugo�� wieloboku.
+    Funkcja oblicza d³ugoœæ wieloboku.
     """
     length = 0.0
     points = lwpolyline.get_points()
@@ -62,20 +62,23 @@ def calculate_lwpolyline_length(lwpolyline):
 
 def analyze_dxf(file_path):
     """
-    Funkcja analizuje plik DXF i oblicza obw�d i pole dla r�nych typ�w geometrii.
+    Funkcja analizuje plik DXF i oblicza obwód i pole dla ró¿nych typów geometrii.
     """
     doc = ezdxf.readfile(file_path)
     msp = doc.modelspace()
 
     total_perimeter = 0.0
     total_area = 0.0
+    cost_per_milimeter = 0.003
 
     for entity in msp.query('*'):
         perimeter = calculate_perimeter(entity)
-        if perimeter != "Nieobs�ugiwane":
+        if perimeter != "Nieobs³ugiwane":
             total_perimeter += perimeter
         area = calculate_area(entity)
-        if area != "Nieobs�ugiwane" and area != "B��d: brakuje punkt�w":
+        if area != "Nieobs³ugiwane" and area != "B³¹d: brakuje punktów":
             total_area += area
 
-    return total_perimeter, total_area
+    total_cost = round(total_perimeter * cost_per_milimeter,2)
+
+    return total_perimeter, total_area, total_cost

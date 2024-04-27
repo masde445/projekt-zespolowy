@@ -54,6 +54,7 @@ function analyzeDXF() {
             document.getElementById('results').innerHTML = `
                     <p>Calkowity obwód: ${data.total_perimeter}</p>
                     <p>Calkowite pole: ${data.total_area}</p>
+                    <p>Calkowity koszt: ${data.total_cost} zł</p>
                 `;
         })
         .catch(error => {
